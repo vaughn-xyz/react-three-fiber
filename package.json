@@ -43,6 +43,9 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write ."
   },
+  "publishConfig": {
+    "@vbullock-xyz:registry": "https://npm.pkg.github.com"
+  },
   "devDependencies": {
     "@babel/core": "7.17.8",
     "@babel/preset-env": "7.16.11",
