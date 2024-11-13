@@ -133,10 +133,15 @@ export function useMeasure(
     }
 
     if (state.current.orientationHandler) {
-      if ('orientation' in screen && 'removeEventListener' in screen.orientation) {
-        screen.orientation.removeEventListener('change', state.current.orientationHandler)
-      } else if ('onorientationchange' in window) {
-        window.removeEventListener('orientationchange', state.current.orientationHandler)
+      try {
+        // @ts-ignore - screen.orientation might not exist in all environments
+        if (screen.orientation?.removeEventListener) {
+          screen.orientation.removeEventListener('change', state.current.orientationHandler)
+        } else if (window.onorientationchange !== undefined) {
+          window.removeEventListener('orientationchange', state.current.orientationHandler)
+        }
+      } catch {
+        // Silently fail if screen.orientation is not supported
       }
     }
   }
@@ -158,11 +163,15 @@ export function useMeasure(
     }
 
     // Use screen.orientation if available
-    if ('orientation' in screen && 'addEventListener' in screen.orientation) {
-      screen.orientation.addEventListener('change', state.current.orientationHandler)
-    } else if ('onorientationchange' in window) {
-      // Fallback to orientationchange event
-      window.addEventListener('orientationchange', state.current.orientationHandler)
+    try {
+      // @ts-ignore - screen.orientation might not exist in all environments
+      if (screen.orientation?.addEventListener) {
+        screen.orientation.addEventListener('change', state.current.orientationHandler)
+      } else if (window.onorientationchange !== undefined) {
+        window.addEventListener('orientationchange', state.current.orientationHandler)
+      }
+    } catch {
+      // Silently fail if screen.orientation is not supported
     }
   }
 
