@@ -1,6 +1,6 @@
 {
-  "name": "react-three-fiber--root",
-  "version": "0.0.0",
+  "name": "react-three-fiber.cube",
+  "version": "0.0.1",
   "license": "MIT",
   "private": true,
   "workspaces": [
